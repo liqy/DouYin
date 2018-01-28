@@ -6,6 +6,7 @@ import io.reactivex.Observable;
 import retrofit2.http.GET;
 
 /**
+ * 初始全局设置
  * Created by liqy on 2018/1/28.
  */
 

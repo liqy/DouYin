@@ -7,6 +7,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 /**
+ * 搜索
  * Created by liqy on 2018/1/28.
  */
 
