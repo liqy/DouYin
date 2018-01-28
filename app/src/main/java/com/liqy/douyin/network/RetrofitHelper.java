@@ -1,6 +1,7 @@
 package com.liqy.douyin.network;
 
 import com.liqy.douyin.home.HomeApi;
+import com.liqy.douyin.shoot.ShootApi;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -56,9 +57,23 @@ public class RetrofitHelper {
         return getRetrofit().create(clazz);
     }
 
+    /**
+     * 主页接口服务
+     * @return
+     */
     public static HomeApi getHomeApi() {
         return createApi(HomeApi.class);
     }
+
+    /**
+     * 拍摄页面接口服务
+     * @return
+     */
+    public static ShootApi getShootApi() {
+        return createApi(ShootApi.class);
+    }
+
+
 
 
 }
