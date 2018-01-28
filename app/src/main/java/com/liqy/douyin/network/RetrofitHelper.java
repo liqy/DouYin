@@ -1,5 +1,7 @@
 package com.liqy.douyin.network;
 
+import com.liqy.douyin.home.HomeApi;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
