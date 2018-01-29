@@ -4,23 +4,35 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.liqy.douyin.common.BaseActivity;
 import com.liqy.douyin.common.HttpResult;
 import com.liqy.douyin.home.HomeApi;
+import com.liqy.douyin.network.Constants;
 import com.liqy.douyin.network.RetrofitHelper;
 import com.liqy.douyin.shoot.ShootApi;
+import com.umeng.analytics.MobclickAgent;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //当用户使用自有账号登录时，可以这样统计：
+        MobclickAgent.onProfileSignIn(Constants.DEVICE_ID);
+
         getShootData();
+
+        /**
+         * 自定义统计事件
+         */
+
+        MobclickAgent.onEvent(this,"add_cart");
 
     }
 
@@ -82,4 +94,13 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    @Override
+    public String getPageStartName() {
+        return getLocalClassName();
+    }
+
+    @Override
+    public String getPageEndName() {
+        return getLocalClassName();
+    }
 }

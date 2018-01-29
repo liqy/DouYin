@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.liqy.douyin"
+        applicationId "com.liqy.douyin"//第三方网站上需要填写的包名：需要使用这个
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
@@ -63,4 +63,8 @@ dependencies {
 
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.1.9'
+
+//    友盟
+    compile 'com.umeng.sdk:common:latest.integration'
+    compile 'com.umeng.sdk:analytics:latest.integration'
 }

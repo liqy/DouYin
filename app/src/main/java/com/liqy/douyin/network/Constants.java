@@ -9,7 +9,7 @@ public class Constants {
     public static final String BASE_URL = "https://api.amemv.com/";
 
     /**
-     * 根据自己的账号去修改
+     * TODO　根据自己的账号去修改（只需要修改这几个即可）
      */
     public static final String IID = "24667239392"; //安装ID
     public static final String UUID = "864295035858712";
