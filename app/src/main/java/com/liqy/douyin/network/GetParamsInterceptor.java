@@ -32,28 +32,28 @@ public class GetParamsInterceptor implements Interceptor {
 
         HashMap<String, String>
                 paramsMap = new HashMap<String, String>();
-        paramsMap.put("iid", "24446056580");
-        paramsMap.put("channel", "xiaomi");
-        paramsMap.put("aid", "1128");
-        paramsMap.put("uuid", Utils.getDeviceUUID(context));
-        paramsMap.put("openudid", "b39d9675ee6af5b2");
-        paramsMap.put("app_name", "aweme");
-        paramsMap.put("version_code", "159");
-        paramsMap.put("version_name", "1.5.9");
+        paramsMap.put("iid", Constants.IID);
+        paramsMap.put("channel", Constants.CHANNEL);//下载渠道
+        paramsMap.put("aid", Constants.AID);
+        paramsMap.put("uuid", Utils.getDeviceUUID(context)); //设备唯一号 需要运行时权限
+        paramsMap.put("openudid", Constants.OPEN_UDID); //更账户绑定
+        paramsMap.put("app_name", Constants.APP_NAME); //应用名称
+        paramsMap.put("version_code", Constants.V_CODE);//版本号
+        paramsMap.put("version_name", Constants.V_NAME);//版本名称
         paramsMap.put("ssmix", "a");
-        paramsMap.put("manifest_version_code", "159");
-        paramsMap.put("device_type", Utils.getDeviceName());
-        paramsMap.put("device_brand", Utils.getDeviceFactory());
-        paramsMap.put("os_api", Utils.getOSSDK());
-        paramsMap.put("os_version", Utils.getOSRelease());
-        paramsMap.put("resolution", Utils.getDeviceWidth(context) + "*" + Utils.getDeviceHeight(context));
-        paramsMap.put("dpi", Utils.getDeviceDpi(context) + "");
-        paramsMap.put("device_id", "42386607829");
+        paramsMap.put("manifest_version_code", Constants.V_CODE);//版本号
+        paramsMap.put("device_type", Utils.getDeviceName());//设备类型
+        paramsMap.put("device_brand", Utils.getDeviceFactory());//手机品牌
+        paramsMap.put("os_api", Utils.getOSSDK());//SDK 版本号
+        paramsMap.put("os_version", Utils.getOSRelease());//手机系统版本号
+        paramsMap.put("resolution", Utils.getDeviceWidth(context) + "*" + Utils.getDeviceHeight(context));//分辨率
+        paramsMap.put("dpi", Utils.getDeviceDpi(context) + "");//屏幕密度
+        paramsMap.put("device_id", Constants.DID);//设备ID
 //		params.put("ac", NetworkUtil.getNetworkType(GlobalContext.getContext()).toLowerCase());
-        paramsMap.put("ac", "wifi");
-        paramsMap.put("device_platform", "android");
-        paramsMap.put("update_version_code", "1592");
-        paramsMap.put("app_type", "normal");
+        paramsMap.put("ac", "wifi");//网络类型
+        paramsMap.put("device_platform", "android");//平台
+        paramsMap.put("update_version_code", "1592");//更新版本号
+        paramsMap.put("app_type", "normal");//应用类型
 
         int time = (int) (System.currentTimeMillis() / 1000);
 
