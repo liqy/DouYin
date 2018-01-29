@@ -35,7 +35,7 @@ public class GetParamsInterceptor implements Interceptor {
         paramsMap.put("iid", Constants.IID);
         paramsMap.put("channel", Constants.CHANNEL);//下载渠道
         paramsMap.put("aid", Constants.AID);
-        paramsMap.put("uuid", Utils.getDeviceUUID(context)); //设备唯一号 需要运行时权限
+        paramsMap.put("uuid", Constants.UUID); //设备唯一号 需要运行时权限
         paramsMap.put("openudid", Constants.OPEN_UDID); //更账户绑定
         paramsMap.put("app_name", Constants.APP_NAME); //应用名称
         paramsMap.put("version_code", Constants.V_CODE);//版本号
@@ -48,7 +48,7 @@ public class GetParamsInterceptor implements Interceptor {
         paramsMap.put("os_version", Utils.getOSRelease());//手机系统版本号
         paramsMap.put("resolution", Utils.getDeviceWidth(context) + "*" + Utils.getDeviceHeight(context));//分辨率
         paramsMap.put("dpi", Utils.getDeviceDpi(context) + "");//屏幕密度
-        paramsMap.put("device_id", Constants.DID);//设备ID
+        paramsMap.put("device_id", Constants.DEVICE_ID);//设备ID
 //		params.put("ac", NetworkUtil.getNetworkType(GlobalContext.getContext()).toLowerCase());
         paramsMap.put("ac", "wifi");//网络类型
         paramsMap.put("device_platform", "android");//平台

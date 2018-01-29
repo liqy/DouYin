@@ -11,10 +11,10 @@ public class Constants {
     /**
      * 根据自己的账号去修改
      */
-    public static final String IID = "24446056580";
-    public static final String AID = "1128";
-    public static final String OPEN_UDID = "b39d9675ee6af5b2";
-    public static final String DID = "42386607829";
+    public static final String IID = "24667239392"; //安装ID
+    public static final String UUID = "864295035858712";
+    public static final String OPEN_UDID = "283ab4546c7bf629";
+    public static final String DEVICE_ID = "34971691517";
 
     /**
      * 固定不变
@@ -23,5 +23,6 @@ public class Constants {
     public static final String CHANNEL = "xiaomi";
     public static final String V_CODE = "159";
     public static final String V_NAME = "1.5.9";
+    public static final String AID = "1128";
 
 }
