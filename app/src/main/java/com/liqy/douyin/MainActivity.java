@@ -1,22 +1,42 @@
 package com.liqy.douyin;
 
+import android.Manifest;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.just.agentweb.AgentWeb;
 import com.liqy.douyin.common.BaseActivity;
 import com.liqy.douyin.common.HttpResult;
 import com.liqy.douyin.home.HomeApi;
 import com.liqy.douyin.network.Constants;
 import com.liqy.douyin.network.RetrofitHelper;
 import com.liqy.douyin.shoot.ShootApi;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.umeng.analytics.MobclickAgent;
+import com.uuch.adlibrary.AdConstant;
+import com.uuch.adlibrary.AdManager;
+import com.uuch.adlibrary.bean.AdInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * 运行时权限：https://github.com/tbruyelle/RxPermissions
+ */
 public class MainActivity extends BaseActivity {
+
+    private List<AdInfo> advList = null;
+    AgentWeb mAgentWeb;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +52,82 @@ public class MainActivity extends BaseActivity {
          * 自定义统计事件
          */
 
-        MobclickAgent.onEvent(this,"add_cart");
+        MobclickAgent.onEvent(this, "add_cart");
 
+        initRuntime();
+
+        TextView hello = (TextView) findViewById(R.id.hello);
+        hello.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initDialog();
+            }
+        });
+    }
+
+    /**
+     * 初始化对话框
+     */
+    private void initDialog() {
+        advList = new ArrayList<>();
+        AdInfo adInfo = new AdInfo();
+        adInfo.setActivityImg("https://raw.githubusercontent.com/yipianfengye/android-adDialog/master/images/testImage1.png");
+        advList.add(adInfo);
+
+        adInfo = new AdInfo();
+        adInfo.setActivityImg("https://raw.githubusercontent.com/yipianfengye/android-adDialog/master/images/testImage2.png");
+        adInfo.setUrl("https://www.baidu.com/");
+        advList.add(adInfo);
+
+        AdManager adManager = new AdManager(MainActivity.this, advList);
+
+        adManager.setOnImageClickListener(new AdManager.OnImageClickListener() {
+            @Override
+            public void onImageClick(View view, final AdInfo advInfo) {
+
+                if (!TextUtils.isEmpty(advInfo.getUrl())) {
+                    WebActivity.openWeb(MainActivity.this, advInfo);
+                }
+
+                Toast.makeText(MainActivity.this, "您点击了ViewPagerItem...", Toast.LENGTH_SHORT).show();
+            }
+        });
+        adManager.showAdDialog(AdConstant.ANIM_UP_TO_DOWN);
+    }
+
+    private void initRuntime() {
+        RxPermissions rxPermissions = new RxPermissions(this); // where this is an Activity instance
+
+        // Must be done during an initialization phase like onCreate
+        rxPermissions
+                .requestEach(Manifest.permission.CAMERA, Manifest.permission.READ_PHONE_STATE)
+                .subscribe(new Consumer<Permission>() {
+                    @Override
+                    public void accept(Permission permission) throws Exception {
+
+                        if (permission.granted) {
+                            // `permission.name` is granted !
+
+                            Log.d(getLocalClassName(), permission.name);
+
+                            if (TextUtils.equals(permission.name, Manifest.permission.CAMERA)) {
+                                //TODO
+                            }
+
+                            if (TextUtils.equals(permission.name, Manifest.permission.READ_PHONE_STATE)) {
+                                //TODO
+                            }
+
+                        } else if (permission.shouldShowRequestPermissionRationale) {
+                            // Denied permission without ask never again
+                        } else {
+                            // Denied permission with ask never again
+                            // Need to go to the settings
+                        }
+
+
+                    }
+                });
     }
 
     private void getShootData() {

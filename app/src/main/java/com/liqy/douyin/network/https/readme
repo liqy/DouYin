@@ -1,0 +1,46 @@
+参考资料：http://blog.csdn.net/lmj623565791/article/details/48129405
+查看证书信息：http://blog.csdn.net/id19870510/article/details/53992234
+
+http://note.youdao.com/noteshare?id=faa305bf870eb9cb9e561f34e64ca373&sub=2277CC19D18049E0982A43339B1D4334
+
+设置可访问所有的https网站
+
+HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null, null, null);
+
+OkHttpClient okHttpClient = new OkHttpClient.Builder()
+        .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
+         //其他配置
+         .build();
+
+设置具体的证书
+HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(证书的inputstream, null, null);
+OkHttpClient okHttpClient = new OkHttpClient.Builder()
+        .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager))
+         //其他配置
+         .build();
+
+双向认证
+HttpsUtils.getSslSocketFactory(
+	证书的inputstream,
+	本地证书的inputstream,
+	本地证书的密码)
+
+框架中只是提供了几个实现类，你可以自行实现SSLSocketFactory，传入sslSocketFactory即可
+
+生成证书
+
+ 服务端证书
+ keytool -genkey -alias liqy_server -keyalg RSA -keystore liqy_server.jks -validity 3600 -storepass 123456
+
+ keytool -export -alias liqy_server -file liqy_server.cer -keystore liqy_server.jks -storepass 123456
+
+ 客户端证书
+ keytool -genkey -alias liqy_client -keyalg RSA -keystore liqy_client.jks -validity 3600 -storepass 123456
+
+ keytool -export -alias liqy_client -file liqy_client.cer -keystore liqy_client.jks -storepass 123456
+
+ 将客户端证书导入
+ keytool -import -alias liqy_client -file liqy_client.cer -keystore liqy_client_for_server.jks
+
+ 查看证书RFC格式
+ keytool -list -rfc -keystore  *.jks

@@ -6,12 +6,13 @@ import android.util.Log;
 import com.ss.android.common.applog.GlobalContext;
 import com.ss.android.common.applog.UserInfo;
 import com.umeng.commonsdk.UMConfigure;
+import com.uuch.adlibrary.LApplication;
 
 /**
  * Created by liqy on 2018/1/27.
  */
 
-public class App extends Application {
+public class App extends LApplication {
 
     @Override
     public void onCreate() {
