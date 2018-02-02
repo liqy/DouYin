@@ -197,15 +197,15 @@ public class MainActivity extends BaseActivity {
 //                    }
 //                });
 //
-//        api.commentList("6512401713704471821", 0, 20, 2)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<HttpResult>() {
-//                    @Override
-//                    public void accept(HttpResult result) throws Exception {
-//                        Log.d(getLocalClassName(), result.toString());
-//                    }
-//                });
+        api.commentList("6512401713704471821", 0, 20, 2)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<HttpResult>() {
+                    @Override
+                    public void accept(HttpResult result) throws Exception {
+                        Log.d(getLocalClassName(), result.toString());
+                    }
+                });
     }
 
     @Override

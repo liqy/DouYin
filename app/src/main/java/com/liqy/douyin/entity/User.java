@@ -20,11 +20,14 @@ public class User {
 
     public String signature;
 
-    @Generated(hash = 914631923)
-    public User(Long id, String name, String signature) {
+    public String birthday;
+
+    @Generated(hash = 227399599)
+    public User(Long id, String name, String signature, String birthday) {
         this.id = id;
         this.name = name;
         this.signature = signature;
+        this.birthday = birthday;
     }
 
     @Generated(hash = 586692638)
@@ -58,5 +61,13 @@ public class User {
 
     public void setSignature(String signature) {
         this.signature = signature;
+    }
+
+    public String getBirthday() {
+        return this.birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 }

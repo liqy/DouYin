@@ -12,11 +12,13 @@ public class DBHelper {
 
     private static DaoSession daoSession;
 
+
+
     public static void initDB(Context context) {
         //TODO 当你需要数据库更新操作的时候需要实现自己的OpenHelper,不能直接调用DaoMaster.DevOpenHelper
         //TODO 否则会产生数据丢失。
 
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "test-db");
+        MySQLiteOpenHelper helper = new MySQLiteOpenHelper(context, "test-db");
 
 
         Database db = helper.getWritableDb();
