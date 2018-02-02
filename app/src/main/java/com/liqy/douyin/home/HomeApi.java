@@ -1,6 +1,8 @@
 package com.liqy.douyin.home;
 
 import com.liqy.douyin.common.HttpResult;
+import com.liqy.douyin.entity.User;
+import com.liqy.douyin.entity.UserResult;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -20,7 +22,7 @@ public interface HomeApi {
      * @return
      */
     @GET("aweme/v1/user/")
-    Observable<HttpResult> userInfo(@Query("user_id") String uid);
+    Observable<UserResult<User>> userInfo(@Query("user_id") String uid);
 
     /**
      * 自己的信息

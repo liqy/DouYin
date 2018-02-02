@@ -2,11 +2,19 @@ package com.liqy.douyin;
 
 import android.app.Application;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.BounceInterpolator;
+import android.widget.ImageView;
 
+import com.facebook.stetho.Stetho;
+import com.liqy.douyin.db.DBHelper;
 import com.ss.android.common.applog.GlobalContext;
 import com.ss.android.common.applog.UserInfo;
 import com.umeng.commonsdk.UMConfigure;
 import com.uuch.adlibrary.LApplication;
+import com.yhao.floatwindow.FloatWindow;
+import com.yhao.floatwindow.MoveType;
+import com.yhao.floatwindow.Screen;
 
 /**
  * Created by liqy on 2018/1/27.
@@ -20,6 +28,35 @@ public class App extends LApplication {
         GlobalContext.setContext(getApplicationContext());
         loadSo();
         initUmeng();
+
+        DBHelper.initDB(this);
+
+        Stetho.initializeWithDefaults(this);
+
+        ImageView imageView = new ImageView(getApplicationContext());
+        imageView.setImageResource(R.mipmap.ic_launcher);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO 处理悬浮窗口的点击事件
+
+
+            }
+        });
+
+//        FloatWindow
+//                .with(getApplicationContext())
+//                .setView(imageView)
+//                .setWidth(Screen.width,0.2f)
+//                .setHeight(Screen.width,0.2f)
+//                .setX(Screen.width,0.8f)
+//                .setY(Screen.height,0.3f)
+//                .setMoveType(MoveType.slide)
+//                .setMoveStyle(500,new BounceInterpolator())
+//                .setDesktopShow(true)
+//
+//                .build();
     }
 
     private void initUmeng() {

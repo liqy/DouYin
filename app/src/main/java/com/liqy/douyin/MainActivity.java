@@ -11,6 +11,10 @@ import android.widget.Toast;
 import com.just.agentweb.AgentWeb;
 import com.liqy.douyin.common.BaseActivity;
 import com.liqy.douyin.common.HttpResult;
+import com.liqy.douyin.db.DBHelper;
+import com.liqy.douyin.db.UserDao;
+import com.liqy.douyin.entity.User;
+import com.liqy.douyin.entity.UserResult;
 import com.liqy.douyin.home.HomeApi;
 import com.liqy.douyin.network.Constants;
 import com.liqy.douyin.network.RetrofitHelper;
@@ -47,6 +51,8 @@ public class MainActivity extends BaseActivity {
         MobclickAgent.onProfileSignIn(Constants.DEVICE_ID);
 
         getShootData();
+
+        getHomeData();
 
         /**
          * 自定义统计事件
@@ -160,32 +166,46 @@ public class MainActivity extends BaseActivity {
         api.userInfo("81819485589")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<HttpResult>() {
+                .subscribe(new Consumer<UserResult<User>>() {
                     @Override
-                    public void accept(HttpResult s) throws Exception {
-                        Log.d(getLocalClassName(), s.toString());
+                    public void accept(UserResult<User> result) throws Exception {
+                        Log.d(getLocalClassName(), result.toString());
+                        UserDao dao= DBHelper.getDaoSession().getUserDao();
+
+                        //保存数据
+                        dao.save(result.user);
+
+                        dao.count();//表中数据的列数
+
+//                        dao.delete(); 删除必须确认主键
+
+//                        dao.queryBuilder() 构建查询语句
+
+//                        dao.queryRaw() 自己跟需要编写SQL语句
+
+
                     }
                 });
 
-        api.feed(0, 0, 0, 6)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<HttpResult>() {
-                    @Override
-                    public void accept(HttpResult result) throws Exception {
-                        Log.d(getLocalClassName(), result.toString());
-                    }
-                });
-
-        api.commentList("6512401713704471821", 0, 20, 2)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<HttpResult>() {
-                    @Override
-                    public void accept(HttpResult result) throws Exception {
-                        Log.d(getLocalClassName(), result.toString());
-                    }
-                });
+//        api.feed(0, 0, 0, 6)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<HttpResult>() {
+//                    @Override
+//                    public void accept(HttpResult result) throws Exception {
+//                        Log.d(getLocalClassName(), result.toString());
+//                    }
+//                });
+//
+//        api.commentList("6512401713704471821", 0, 20, 2)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<HttpResult>() {
+//                    @Override
+//                    public void accept(HttpResult result) throws Exception {
+//                        Log.d(getLocalClassName(), result.toString());
+//                    }
+//                });
     }
 
     @Override

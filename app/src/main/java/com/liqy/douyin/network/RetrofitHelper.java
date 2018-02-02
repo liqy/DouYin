@@ -1,5 +1,6 @@
 package com.liqy.douyin.network;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.liqy.douyin.home.HomeApi;
 import com.liqy.douyin.shoot.ShootApi;
 
@@ -31,6 +32,7 @@ public class RetrofitHelper {
                     okHttpClient = new OkHttpClient.Builder()
                             .addInterceptor(new GetParamsInterceptor())
                             .addInterceptor(logging)
+                            .addNetworkInterceptor(new StethoInterceptor())
                             .build();
                 }
             }
