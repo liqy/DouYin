@@ -1,211 +1,174 @@
 package com.liqy.douyin;
 
-import android.Manifest;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.just.agentweb.AgentWeb;
 import com.liqy.douyin.common.BaseActivity;
-import com.liqy.douyin.common.HttpResult;
-import com.liqy.douyin.db.DBHelper;
-import com.liqy.douyin.db.UserDao;
-import com.liqy.douyin.entity.User;
-import com.liqy.douyin.entity.UserResult;
-import com.liqy.douyin.home.HomeApi;
+import com.liqy.douyin.follow.FollowFragment;
+import com.liqy.douyin.home.HomeFragment;
+import com.liqy.douyin.message.MessageFragment;
+import com.liqy.douyin.mine.MineFragment;
 import com.liqy.douyin.network.Constants;
-import com.liqy.douyin.network.RetrofitHelper;
-import com.liqy.douyin.shoot.ShootApi;
-import com.tbruyelle.rxpermissions2.Permission;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.umeng.analytics.MobclickAgent;
-import com.uuch.adlibrary.AdConstant;
-import com.uuch.adlibrary.AdManager;
-import com.uuch.adlibrary.bean.AdInfo;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
+import butterknife.BindColor;
+import butterknife.BindString;
+import butterknife.BindView;
 
 /**
  * 运行时权限：https://github.com/tbruyelle/RxPermissions
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
-    private List<AdInfo> advList = null;
-    AgentWeb mAgentWeb;
+    @BindView(R.id.bottom_layout)
+    LinearLayout bottom_layout;
+
+    @BindView(R.id.tv_home)
+    TextView tv_home;
+
+    @BindView(R.id.iv_refresh)
+    ImageView iv_refresh;
+
+    @BindView(R.id.tv_follow)
+    TextView tv_follow;
+
+    @BindView(R.id.tv_mesage)
+    TextView tv_mesage;
+
+    @BindView(R.id.tv_mine)
+    TextView tv_mine;
+
+    @BindColor(R.color.text_color_write)
+    int text_color_write;
+    @BindColor(R.color.text_color_gray)
+    int text_color_gray;
+
+    @BindColor(R.color.tab_bottom_transparent)
+    int tab_bottom_transparent;
+
+    @BindColor(R.color.tab_bottom_bg)
+    int tab_bottom_bg;
+
+    @BindString(R.string.main_tab_home_text)
+    String tab_home_text;
+    @BindString(R.string.main_tab_follow_text)
+    String tab_follow_text;
+    @BindString(R.string.main_tab_message_text)
+    String tab_message_text;
+    @BindString(R.string.main_tab_mine_text)
+    String tab_mine_text;
+
+
+
+    HomeFragment homeFragment;
+    FollowFragment followFragment;
+    MessageFragment messageFragment;
+    MineFragment mineFragment;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //当用户使用自有账号登录时，可以这样统计：
         MobclickAgent.onProfileSignIn(Constants.DEVICE_ID);
+        initView();
 
-        getShootData();
-
-        getHomeData();
-
-        /**
-         * 自定义统计事件
-         */
-
-        MobclickAgent.onEvent(this, "add_cart");
-
-        initRuntime();
-
-        TextView hello = (TextView) findViewById(R.id.hello);
-        hello.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initDialog();
-            }
-        });
     }
 
     /**
-     * 初始化对话框
+     * 初始化视图
      */
-    private void initDialog() {
-        advList = new ArrayList<>();
-        AdInfo adInfo = new AdInfo();
-        adInfo.setActivityImg("https://raw.githubusercontent.com/yipianfengye/android-adDialog/master/images/testImage1.png");
-        advList.add(adInfo);
+    private void initView() {
+        tv_home.setOnClickListener(this);
+        tv_follow.setOnClickListener(this);
+        tv_mine.setOnClickListener(this);
+        tv_mesage.setOnClickListener(this);
 
-        adInfo = new AdInfo();
-        adInfo.setActivityImg("https://raw.githubusercontent.com/yipianfengye/android-adDialog/master/images/testImage2.png");
-        adInfo.setUrl("https://www.baidu.com/");
-        advList.add(adInfo);
+        //设置默认
+        setSelected(tv_home);
+        switchFragment(tv_home.getId());
+    }
 
-        AdManager adManager = new AdManager(MainActivity.this, advList);
+    /**
+     * 选择处理
+     *
+     * @param view
+     */
+    private void setSelected(TextView view) {
+        int pos = 0;
+        tv_home.setTextColor(text_color_gray);
+        tv_follow.setTextColor(text_color_gray);
+        tv_mesage.setTextColor(text_color_gray);
+        tv_mine.setTextColor(text_color_gray);
+        if (view.getId() == R.id.tv_home) {
+            pos = 0;
+            bottom_layout.setBackgroundColor(tab_bottom_transparent);
+            tv_home.setVisibility(View.GONE);
+            iv_refresh.setVisibility(View.VISIBLE);
 
-        adManager.setOnImageClickListener(new AdManager.OnImageClickListener() {
-            @Override
-            public void onImageClick(View view, final AdInfo advInfo) {
+        } else if (view.getId() == R.id.tv_follow) {
+            pos = 1;
+            bottom_layout.setBackgroundColor(tab_bottom_bg);
+            tv_follow.setTextColor(text_color_write);
+            tv_home.setVisibility(View.VISIBLE);
+            iv_refresh.setVisibility(View.GONE);
 
-                if (!TextUtils.isEmpty(advInfo.getUrl())) {
-                    WebActivity.openWeb(MainActivity.this, advInfo);
+        } else if (view.getId() == R.id.tv_mesage) {
+            pos = 2;
+            bottom_layout.setBackgroundColor(tab_bottom_bg);
+            tv_mesage.setTextColor(text_color_write);
+            tv_home.setVisibility(View.VISIBLE);
+            iv_refresh.setVisibility(View.GONE);
+
+        } else if (view.getId() == R.id.tv_mine) {
+            pos = 3;
+            bottom_layout.setBackgroundColor(tab_bottom_bg);
+            tv_mine.setTextColor(text_color_write);
+            tv_home.setVisibility(View.VISIBLE);
+            iv_refresh.setVisibility(View.GONE);
+
+        }
+    }
+
+    /**
+     * switch the fragment accordting to id
+     *
+     * @param id
+     */
+    private void switchFragment(int id) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        switch (id) {
+            case R.id.tv_home:
+                if (homeFragment == null) {
+                    homeFragment = HomeFragment.newInstance("", "");
                 }
-
-                Toast.makeText(MainActivity.this, "您点击了ViewPagerItem...", Toast.LENGTH_SHORT).show();
-            }
-        });
-        adManager.showAdDialog(AdConstant.ANIM_UP_TO_DOWN);
-    }
-
-    private void initRuntime() {
-        RxPermissions rxPermissions = new RxPermissions(this); // where this is an Activity instance
-
-        // Must be done during an initialization phase like onCreate
-        rxPermissions
-                .requestEach(Manifest.permission.CAMERA, Manifest.permission.READ_PHONE_STATE)
-                .subscribe(new Consumer<Permission>() {
-                    @Override
-                    public void accept(Permission permission) throws Exception {
-
-                        if (permission.granted) {
-                            // `permission.name` is granted !
-
-                            Log.d(getLocalClassName(), permission.name);
-
-                            if (TextUtils.equals(permission.name, Manifest.permission.CAMERA)) {
-                                //TODO
-                            }
-
-                            if (TextUtils.equals(permission.name, Manifest.permission.READ_PHONE_STATE)) {
-                                //TODO
-                            }
-
-                        } else if (permission.shouldShowRequestPermissionRationale) {
-                            // Denied permission without ask never again
-                        } else {
-                            // Denied permission with ask never again
-                            // Need to go to the settings
-                        }
-
-
-                    }
-                });
-    }
-
-    private void getShootData() {
-        ShootApi api = RetrofitHelper.getShootApi();
-
-        api.musicCollection(0, 1024).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<HttpResult>() {
-                    @Override
-                    public void accept(HttpResult result) throws Exception {
-                        Log.d(getLocalClassName(), result.toString());
-                    }
-                });
-
-        api.hotMusic(0, 10).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<HttpResult>() {
-                    @Override
-                    public void accept(HttpResult result) throws Exception {
-                        Log.d(getLocalClassName(), result.toString());
-                    }
-                });
-
-    }
-
-    public void getHomeData() {
-
-        HomeApi api = RetrofitHelper.getHomeApi();
-
-        api.userInfo("81819485589")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<UserResult<User>>() {
-                    @Override
-                    public void accept(UserResult<User> result) throws Exception {
-                        Log.d(getLocalClassName(), result.toString());
-                        UserDao dao= DBHelper.getDaoSession().getUserDao();
-
-                        //保存数据
-                        dao.save(result.user);
-
-                        dao.count();//表中数据的列数
-
-//                        dao.delete(); 删除必须确认主键
-
-//                        dao.queryBuilder() 构建查询语句
-
-//                        dao.queryRaw() 自己跟需要编写SQL语句
-
-
-                    }
-                });
-
-//        api.feed(0, 0, 0, 6)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<HttpResult>() {
-//                    @Override
-//                    public void accept(HttpResult result) throws Exception {
-//                        Log.d(getLocalClassName(), result.toString());
-//                    }
-//                });
-//
-        api.commentList("6512401713704471821", 0, 20, 2)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<HttpResult>() {
-                    @Override
-                    public void accept(HttpResult result) throws Exception {
-                        Log.d(getLocalClassName(), result.toString());
-                    }
-                });
+                transaction.replace(R.id.sub_content, homeFragment);
+                break;
+            case R.id.tv_follow:
+                if (followFragment == null) {
+                    followFragment = FollowFragment.newInstance("", "");
+                }
+                transaction.replace(R.id.sub_content, followFragment);
+                break;
+            case R.id.tv_mesage:
+                if (messageFragment == null) {
+                    messageFragment = MessageFragment.newInstance("", "");
+                }
+                transaction.replace(R.id.sub_content, messageFragment);
+                break;
+            case R.id.tv_mine:
+                if (mineFragment == null) {
+                    mineFragment = MineFragment.newInstance("", "");
+                }
+                transaction.replace(R.id.sub_content, mineFragment);
+                break;
+        }
+        transaction.commit();
     }
 
     @Override
@@ -216,5 +179,27 @@ public class MainActivity extends BaseActivity {
     @Override
     public String getPageEndName() {
         return getLocalClassName();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v instanceof TextView){
+            TextView textView =(TextView) v;
+            setSelected(textView);
+        }
+        switch (v.getId()){
+            case R.id.tv_home:
+                switchFragment(v.getId());
+                break;
+            case R.id.tv_follow:
+                switchFragment(v.getId());
+                break;
+            case R.id.tv_mesage:
+                switchFragment(v.getId());
+                break;
+            case R.id.tv_mine:
+                switchFragment(v.getId());
+                break;
+        }
     }
 }

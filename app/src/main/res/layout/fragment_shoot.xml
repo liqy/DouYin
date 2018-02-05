@@ -1,0 +1,22 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_room_change"
+    tools:context="com.liqy.douyin.shoot.ShootFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="32dp"
+        android:shadowColor="@color/colorPrimaryDark"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:textColor="@color/colorAccent"
+        android:layout_alignParentBottom="true"
+        android:text="@string/hello_blank_fragment" />
+
+</RelativeLayout>

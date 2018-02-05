@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/anchor_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_room_change"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
+        android:padding="16dp"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true">
+        <!--左边点赞 头像 分享-->
+
+        <!--头像-->
+        <RelativeLayout
+            android:id="@+id/head_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_head"
+                android:src="@mipmap/ic_launcher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <!--点赞-->
+        <RelativeLayout
+            android:layout_marginTop="16dp"
+            android:id="@+id/like_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_like"
+                android:layout_width="wrap_content"
+                android:src="@drawable/s9"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <!--评论-->
+        <RelativeLayout
+            android:layout_marginTop="16dp"
+            android:id="@+id/comment_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_comment"
+                android:src="@drawable/s5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <!--分享-->
+        <RelativeLayout
+            android:layout_marginTop="16dp"
+            android:id="@+id/share_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_share"
+                android:src="@drawable/so"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

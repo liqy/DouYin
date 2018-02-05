@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.liqy.douyin.home.HomeFragment">
+
+    <fr.castorflex.android.verticalviewpager.VerticalViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <ImageView
+            android:id="@+id/x0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/x0" />
+
+        <ImageView
+            android:id="@+id/x1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/x0"
+            android:src="@drawable/x1" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_recommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="推荐"
+                android:layout_marginRight="12dp"
+                android:textColor="@color/text_color_gray"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_nearby"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="附近"
+                android:layout_marginLeft="12dp"
+                android:textColor="@color/text_color_gray"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/xn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/s7" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

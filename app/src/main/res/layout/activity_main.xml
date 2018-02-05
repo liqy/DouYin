@@ -1,19 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.liqy.douyin.MainActivity">
 
-    <TextView
-        android:id="@+id/hello"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!--内容区-->
 
-</android.support.constraint.ConstraintLayout>
+    <FrameLayout
+        android:id="@+id/sub_content"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        android:layout_height="match_parent"/>
+
+    <!--导航区-->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/tab_bottom_bg"
+        android:orientation="horizontal"
+        tools:showIn="@layout/activity_main">
+
+        <TextView
+            android:id="@+id/tv_home"
+            android:background="@android:color/transparent"
+            style="@style/navigation_bar_tab_style"
+            android:visibility="gone"
+            android:text="@string/main_tab_home_text" />
+
+        <ImageView
+            android:id="@+id/iv_refresh"
+            style="@style/navigation_bar_tab_add_style"
+            android:src="@drawable/sh" />
+
+        <TextView
+            android:id="@+id/tv_follow"
+            style="@style/navigation_bar_tab_style"
+            android:text="@string/main_tab_follow_text" />
+
+        <ImageView style="@style/navigation_bar_tab_add_style"
+            android:src="@drawable/main_tab_add"/>
+
+        <TextView
+            android:id="@+id/tv_mesage"
+            style="@style/navigation_bar_tab_style"
+            android:text="@string/main_tab_message_text" />
+
+
+        <TextView
+            android:id="@+id/tv_mine"
+            style="@style/navigation_bar_tab_style"
+            android:text="@string/main_tab_mine_text" />
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
