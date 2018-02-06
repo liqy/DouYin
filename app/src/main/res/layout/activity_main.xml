@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,10 +10,10 @@
 
     <FrameLayout
         android:id="@+id/sub_content"
-        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:background="@color/colorPrimary"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary" />
 
     <!--导航区-->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -27,10 +28,10 @@
 
         <TextView
             android:id="@+id/tv_home"
-            android:background="@android:color/transparent"
             style="@style/navigation_bar_tab_style"
-            android:visibility="gone"
-            android:text="@string/main_tab_home_text" />
+            android:background="@android:color/transparent"
+            android:text="@string/main_tab_home_text"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_refresh"
@@ -42,8 +43,10 @@
             style="@style/navigation_bar_tab_style"
             android:text="@string/main_tab_follow_text" />
 
-        <ImageView style="@style/navigation_bar_tab_add_style"
-            android:src="@drawable/main_tab_add"/>
+        <ImageView
+            android:id="@+id/iv_shoot"
+            style="@style/navigation_bar_tab_add_style"
+            android:src="@drawable/main_tab_add" />
 
         <TextView
             android:id="@+id/tv_mesage"
@@ -58,6 +61,30 @@
 
     </LinearLayout>
 
+    <com.liqy.douyin.shoot.TextDragLayout
+        android:id="@+id/td_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_layout"
+        android:background="@drawable/bg_room_change"
+        app:mode="drag_bottom">
 
+        <RelativeLayout
+            android:id="@+id/layout_drag"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ff0000"
+            >
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="test"
+                android:textSize="16sp"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
+    </com.liqy.douyin.shoot.TextDragLayout>
 
 </RelativeLayout>

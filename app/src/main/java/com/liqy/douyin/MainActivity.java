@@ -2,6 +2,8 @@ package com.liqy.douyin;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,7 +15,9 @@ import com.liqy.douyin.home.HomeFragment;
 import com.liqy.douyin.message.MessageFragment;
 import com.liqy.douyin.mine.MineFragment;
 import com.liqy.douyin.network.Constants;
+import com.liqy.douyin.shoot.TextDragLayout;
 import com.umeng.analytics.MobclickAgent;
+import com.yanxuwen.mydrawer.BaseDragLayout;
 
 import butterknife.BindColor;
 import butterknife.BindString;
@@ -62,7 +66,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @BindString(R.string.main_tab_mine_text)
     String tab_mine_text;
 
+    @BindView(R.id.iv_shoot)
+    ImageView iv_shoot;
 
+
+    @BindView(R.id.td_layout)
+    TextDragLayout bottom_drag_layout;
 
     HomeFragment homeFragment;
     FollowFragment followFragment;
@@ -88,10 +97,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tv_follow.setOnClickListener(this);
         tv_mine.setOnClickListener(this);
         tv_mesage.setOnClickListener(this);
+        iv_shoot.setOnClickListener(this);
 
         //设置默认
         setSelected(tv_home);
         switchFragment(tv_home.getId());
+
+        bottom_drag_layout.setOnDragViewStatusListener(new BaseDragLayout.OnDragViewStatusListener() {
+            @Override
+            public void onDragViewStatus(boolean isOpen) {
+                Log.e("xxxx", "底边抽屉是否打开" + isOpen);
+            }
+        });
+
+        bottom_drag_layout.setOnDragViewOffsetListener(new BaseDragLayout.OnDragViewOffsetListener() {
+            @Override
+            public void onDragViewOffset(float Offset) {
+                Log.e("xxxx", "底边抽屉偏移量" + Offset);
+            }
+        });
     }
 
     /**
@@ -183,11 +207,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v instanceof TextView){
-            TextView textView =(TextView) v;
+        if (v instanceof TextView) {
+            TextView textView = (TextView) v;
             setSelected(textView);
         }
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_home:
                 switchFragment(v.getId());
                 break;
@@ -200,6 +224,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.tv_mine:
                 switchFragment(v.getId());
                 break;
+            case R.id.iv_shoot:
+                bottom_drag_layout.open();
+                break;
         }
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (bottom_drag_layout != null && bottom_drag_layout.isOpen()) {
+                bottom_drag_layout.close();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
