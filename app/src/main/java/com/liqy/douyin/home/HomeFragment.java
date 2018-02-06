@@ -3,12 +3,16 @@ package com.liqy.douyin.home;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.liqy.douyin.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +24,7 @@ import fr.castorflex.android.verticalviewpager.VerticalViewPager;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements View.OnClickListener{
+public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -37,6 +41,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     @BindView(R.id.view_pager)
     VerticalViewPager viewPager;
+
+    PagerAdapter pagerAdapter;
 
 
     public HomeFragment() {
@@ -72,18 +78,24 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     }
 
     private void initView(View view) {
-        ButterKnife.bind(this,view);
-
-
+        ButterKnife.bind(this, view);
         //TODO
+        List<String> list = new ArrayList<>();
+        list.add("");
+        list.add("");
+        list.add("");
+        list.add("");
+        pagerAdapter = new PagerAdapter(list);
+        viewPager.setAdapter(pagerAdapter);
+
     }
 
 
     @Override
     public void onClick(View v) {
-        if (v.getId()==R.id.tv_recommend){
+        if (v.getId() == R.id.tv_recommend) {
 
-        }else if (v.getId()==R.id.tv_nearby){
+        } else if (v.getId() == R.id.tv_nearby) {
 
         }
     }
