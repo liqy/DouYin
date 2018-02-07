@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,9 @@ public class WebActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private TextView mTitleTextView;
     private AlertDialog mAlertDialog;
+
+//    NestedScrollView
+//    CoordinatorLayout
 
     public static void openWeb(Activity activity, AdInfo adInfo){
         Intent intent=new Intent(activity,WebActivity.class);

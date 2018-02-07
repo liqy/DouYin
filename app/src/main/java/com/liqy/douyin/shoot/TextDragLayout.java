@@ -87,6 +87,7 @@ public class TextDragLayout extends BaseDragLayout {
 
         recycler.setLayoutManager(manager);
         recycler.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.HORIZONTAL));
+
         List<String> list = new ArrayList<>();
         list.add("");
         list.add("");

@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         list.add("");
         list.add("");
         list.add("");
-        pagerAdapter = new PagerAdapter(list);
+        pagerAdapter = new PagerAdapter(getActivity(),list);
         viewPager.setAdapter(pagerAdapter);
 
     }
