@@ -10,11 +10,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.liqy.douyin.common.BaseActivity;
+import com.liqy.douyin.common.HttpResult;
 import com.liqy.douyin.follow.FollowFragment;
+import com.liqy.douyin.home.HomeApi;
 import com.liqy.douyin.home.HomeFragment;
 import com.liqy.douyin.message.MessageFragment;
 import com.liqy.douyin.mine.MineFragment;
 import com.liqy.douyin.network.Constants;
+import com.liqy.douyin.network.RetrofitHelper;
 import com.liqy.douyin.shoot.TextDragLayout;
 import com.umeng.analytics.MobclickAgent;
 import com.yanxuwen.mydrawer.BaseDragLayout;
@@ -22,6 +25,9 @@ import com.yanxuwen.mydrawer.BaseDragLayout;
 import butterknife.BindColor;
 import butterknife.BindString;
 import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 运行时权限：https://github.com/tbruyelle/RxPermissions
@@ -87,6 +93,43 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         MobclickAgent.onProfileSignIn(Constants.DEVICE_ID);
         initView();
 
+        getHomeData();
+
+    }
+
+    public void getHomeData() {
+
+        HomeApi api = RetrofitHelper.getHomeApi();
+
+        api.userInfo("81819485589")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<HttpResult>() {
+                    @Override
+                    public void accept(HttpResult s) throws Exception {
+                        Log.d(getLocalClassName(), s.toString());
+                    }
+                });
+
+        api.feed(0, 0, 0, 6)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<HttpResult>() {
+                    @Override
+                    public void accept(HttpResult result) throws Exception {
+                        Log.d(getLocalClassName(), result.toString());
+                    }
+                });
+
+        api.commentList("6512401713704471821", 0, 20, 2)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<HttpResult>() {
+                    @Override
+                    public void accept(HttpResult result) throws Exception {
+                        Log.d(getLocalClassName(), result.toString());
+                    }
+                });
     }
 
     /**
