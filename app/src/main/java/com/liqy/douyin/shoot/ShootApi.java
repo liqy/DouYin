@@ -48,6 +48,7 @@ public interface ShootApi {
 
     /**
      * 收藏动作
+     *
      * @param music_id
      * @param type
      * @return
@@ -69,5 +70,51 @@ public interface ShootApi {
                                      @Query("cursor") int cursor,
                                      @Query("count") int count);
 
+    /**
+     * 尬音机
+     *
+     * @return
+     */
+    @GET("/aweme/v1/bodydance/resource/")
+    Observable<HttpResult> bodydance();
+
+    /**
+     * 音乐详情
+     * @param music_id
+     * @param aweme_id
+     * @return
+     */
+    @GET("/aweme/v1/music/detail/")
+    Observable<HttpResult> musicDetail(@Query("music_id") String music_id, @Query("aweme_id") String aweme_id);
+
+
+    /**
+     * 上面接口一起在详情页面
+     * @param music_id
+     * @param cursor
+     * @param count
+     * @return
+     */
+    @GET("/aweme/v1/music/aweme/")
+    Observable<HttpResult> musicAweme(@Query("music_id") String music_id,
+                                      @Query("cursor") int cursor,
+                                      @Query("count") int count
+                                      );
+
+    /**
+     * 尬舞排行榜
+     * @param music_id
+     * @return
+     */
+    @GET("/aweme/v1/bodydance/rank/detail/")
+    Observable<HttpResult> bodydanceRank(@Query("music_id") String music_id);
+
+
+    /**
+     * 道具
+     * @return
+     */
+    @GET("/aweme/v1/face/sticker/")
+    Observable<HttpResult> faceSticker();
 
 }
