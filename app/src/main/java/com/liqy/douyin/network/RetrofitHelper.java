@@ -2,6 +2,7 @@ package com.liqy.douyin.network;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.liqy.douyin.home.HomeApi;
+import com.liqy.douyin.search.SearchApi;
 import com.liqy.douyin.shoot.ShootApi;
 
 import okhttp3.OkHttpClient;
@@ -75,6 +76,10 @@ public class RetrofitHelper {
         return createApi(ShootApi.class);
     }
 
+
+    public static SearchApi getSearchApi() {
+        return createApi(SearchApi.class);
+    }
 
 
 

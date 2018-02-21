@@ -18,6 +18,7 @@ import com.liqy.douyin.message.MessageFragment;
 import com.liqy.douyin.mine.MineFragment;
 import com.liqy.douyin.network.Constants;
 import com.liqy.douyin.network.RetrofitHelper;
+import com.liqy.douyin.search.SearchApi;
 import com.liqy.douyin.shoot.TextDragLayout;
 import com.umeng.analytics.MobclickAgent;
 import com.yanxuwen.mydrawer.BaseDragLayout;
@@ -93,9 +94,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         MobclickAgent.onProfileSignIn(Constants.DEVICE_ID);
         initView();
 
-        getHomeData();
+//        getHomeData();
+        getSearchData();
 
     }
+
+    private void getSearchData() {
+        SearchApi api=RetrofitHelper.getSearchApi();
+
+        api.hot().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<HttpResult>() {
+                    @Override
+                    public void accept(HttpResult result) throws Exception {
+
+                    }
+                });
+    }
+
 
     public void getHomeData() {
 
